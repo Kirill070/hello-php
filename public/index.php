@@ -2,6 +2,7 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
+use Slim\Views\PhpRenderer;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -22,5 +23,10 @@ $app->get('/hello/{name}', function (Request $request, Response $response, $args
     $response->getBody()->write("Hello, $name");
     return $response;
 });
+
+$app->get('/about', function ($request, $response) {
+          $phpView = new PhpRenderer('../templates');
+          return $phpView->render($response, 'about.phtml');
+      });
 
 $app->run();
